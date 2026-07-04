@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ajukan Penawaran — PasarMigas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B0E11;
+    --bg-panel:#12161B;
+    --bg-card:#171C22;
+    --line: #262D35;
+    --steel:#2D8C87;
+    --steel-dim:#1B4F4C;
+    --amber:#E8871E;
+    --amber-bright:#F5A623;
+    --up:#4CAF6D;
+    --down:#E0554A;
+    --text:#EDEFF2;
+    --text-dim:#8B94A0;
+    --text-faint:#5A626C;
+    --radius: 3px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Archivo Narrow', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+    font-weight:700;
+  }
+  .mono{ font-family:'IBM Plex Mono', monospace; }
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .wrap{ max-width:1200px; margin:0 auto; padding:0 28px; }
+  ::selection{ background:var(--amber); color:#0B0E11; }
+  :focus-visible{ outline: 2px solid var(--amber-bright); outline-offset: 2px; }
+
+  /* ---------- HEADER ---------- */
+  header.site{
+    position:sticky; top:0; z-index:40;
+    background:rgba(11,14,17,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 0;
+  }
+  .brand{ display:flex; align-items:center; gap:10px; }
+  .brand-mark{
+    width:30px; height:30px;
+    border:1.5px solid var(--amber);
+    border-radius:2px;
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+  }
+  .brand-mark::before{
+    content:'';
+    width:9px; height:9px;
+    background:var(--amber);
+    border-radius:1px;
+  }
+  .brand-name{ font-family:'Archivo Narrow', sans-serif; font-weight:700; font-size:19px; text-transform:uppercase; letter-spacing:0.02em;}
+  .brand-name span{ color:var(--amber); }
+  nav.links{ display:flex; gap:32px; }
+  nav.links a{ font-size:14px; color:var(--text-dim); font-weight:500; transition:color .15s; }
+  nav.links a:hover, nav.links a.active{ color:var(--text); }
+  .nav-cta{ display:flex; gap:10px; align-items:center; }
+  .btn{
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:14px; font-weight:600;
+    padding:10px 18px;
+    border-radius:var(--radius);
+    border:1px solid transparent;
+    cursor:pointer;
+    transition:all .15s;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-primary{ background:var(--amber); color:#12100B; }
+  .btn-primary:hover{ background:var(--amber-bright); }
+  .btn-outline{ border-color:var(--line); color:var(--text); background:transparent; }
+  .btn-outline:hover{ border-color:var(--text-dim); }
+  .btn-sm{ padding:7px 13px; font-size:13px; }
+
+  /* ---------- BUYER HERO ---------- */
+  .bhero{
+    padding:64px 0 50px;
+    border-bottom:1px solid var(--line);
+    background:
+      radial-gradient(ellipse 700px 380px at 88% 0%, rgba(45,140,135,0.14), transparent 60%),
+      var(--bg);
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--steel);
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    display:flex; align-items:center; gap:8px;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{ content:''; width:16px; height:1px; background:var(--steel); }
+  .bhero h1{ font-size:42px; line-height:1.08; margin-bottom:16px; max-width:760px; }
+  .bhero h1 em{ font-style:normal; color:var(--steel); }
+  .bhero p.lede{ font-size:16px; color:var(--text-dim); max-width:560px; margin-bottom:30px; }
+  .bhero-stats{ display:flex; gap:0; flex-wrap:wrap; }
+  .hstat{ padding-right:34px; margin-right:34px; border-right:1px solid var(--line); }
+  .hstat:last-child{ border-right:none; margin-right:0; padding-right:0;}
+  .hstat .n{ font-family:'IBM Plex Mono',monospace; font-size:24px; font-weight:600; color:var(--text); }
+  .hstat .l{ font-size:12px; color:var(--text-faint); margin-top:2px; }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{ padding:60px 0; border-bottom:1px solid var(--line); }
+  .sec-head{ margin-bottom:32px; }
+  .sec-eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--steel); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:10px;}
+  .sec-head h2{ font-size:26px; margin-bottom:8px;}
+  .sec-head p{ color:var(--text-dim); font-size:14.5px; max-width:520px; }
+
+  /* ---------- STEPS ---------- */
+  .step-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+  .step-card{ background:var(--bg-card); padding:24px 20px; }
+  .step-card .si{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--steel); border:1px solid var(--steel); width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:16px; }
+  .step-card h3{ font-size:15.5px; margin-bottom:8px; text-transform:none; letter-spacing:0; }
+  .step-card p{ font-size:13px; color:var(--text-dim); }
+
+  /* ---------- FORM + SUMMARY ---------- */
+  .form-layout{ display:grid; grid-template-columns:1.2fr 0.8fr; gap:28px; align-items:flex-start; }
+  .form-panel{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+    padding:32px;
+  }
+  .form-panel h3{ font-size:19px; margin-bottom:6px; text-transform:none; letter-spacing:0; }
+  .form-panel p.sub{ font-size:13px; color:var(--text-dim); margin-bottom:26px; }
+  .field-row{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .field{ margin-bottom:18px; }
+  .field label{ display:block; font-size:12px; color:var(--text-dim); margin-bottom:6px; font-family:'IBM Plex Mono',monospace; }
+  .field input, .field select, .field textarea{
+    width:100%; background:#0D1013; border:1px solid var(--line); color:var(--text);
+    padding:11px 12px; border-radius:2px; font-size:14px; font-family:'IBM Plex Sans',sans-serif;
+  }
+  .field textarea{ resize:vertical; min-height:70px; }
+  .field input:focus, .field select:focus, .field textarea:focus{ border-color:var(--steel); outline:none; }
+  .form-actions{ display:flex; gap:10px; margin-top:8px; }
+
+  /* summary panel */
+  .summary-label{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-dim); letter-spacing:0.05em; text-transform:uppercase; margin-bottom:12px; }
+  .scard{
+    background:var(--bg-card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:22px; display:flex; flex-direction:column; gap:14px;
+    position:sticky; top:96px;
+  }
+  .scard-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+  .scard-top h4{ font-size:16px; text-transform:none; letter-spacing:0; }
+  .badge{
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.03em;
+    padding:3px 8px; border-radius:2px; white-space:nowrap;
+  }
+  .badge-request{ background:rgba(45,140,135,0.15); color:var(--steel); border:1px solid var(--steel-dim); }
+  .spec-row{ display:flex; justify-content:space-between; font-size:13px; color:var(--text-dim); border-top:1px dashed var(--line); padding-top:10px; }
+  .spec-row span:last-child{ color:var(--text); font-family:'IBM Plex Mono',monospace; font-size:12.5px; text-align:right; }
+  .scard-note{ font-size:12px; color:var(--text-faint); }
+  .summary-hint{ font-size:12px; color:var(--text-faint); margin-top:14px; line-height:1.5; }
+
+  /* ---------- CONFIRM VIEW ---------- */
+  .confirm-box{ display:none; text-align:center; padding:40px 20px; }
+  .confirm-box.show{ display:block; }
+  .confirm-box .ok-mark{ width:50px; height:50px; border:1.5px solid var(--up); border-radius:50%; margin:0 auto 18px; display:flex; align-items:center; justify-content:center; color:var(--up); font-size:22px; }
+  .confirm-box h3{ font-size:20px; margin-bottom:8px; text-transform:none; letter-spacing:0; }
+  .confirm-box p{ font-size:14px; color:var(--text-dim); max-width:420px; margin:0 auto; }
+  .confirm-box .ref{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--amber-bright); margin-top:16px; }
+
+  /* ---------- FOOTER ---------- */
+  footer{ padding:44px 0 30px; border-bottom:none; }
+  .foot-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:32px; margin-bottom:36px; }
+  .foot-brand p{ font-size:13px; color:var(--text-faint); margin-top:12px; max-width:260px; }
+  .foot-col h5{ font-size:12px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:14px; font-family:'IBM Plex Mono',monospace; font-weight:500;}
+  .foot-col a{ display:block; font-size:13.5px; color:var(--text-faint); margin-bottom:10px; transition:color .15s;}
+  .foot-col a:hover{ color:var(--text); }
+  .foot-bottom{ border-top:1px solid var(--line); padding-top:20px; display:flex; justify-content:space-between; font-size:12.5px; color:var(--text-faint); font-family:'IBM Plex Mono',monospace; flex-wrap:wrap; gap:10px;}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px){
+    .step-grid{ grid-template-columns:repeat(2,1fr); }
+    .form-layout{ grid-template-columns:1fr; }
+    .scard{ position:static; }
+    .foot-grid{ grid-template-columns:1fr 1fr; }
+  }
+  @media (max-width: 640px){
+    nav.links{ display:none; }
+    .bhero h1{ font-size:30px; }
+    .field-row{ grid-template-columns:1fr; }
+    .step-grid{ grid-template-columns:1fr; }
+    .bhero-stats{ gap:18px 0; }
+    .hstat{ border-right:none; margin-right:0; padding-right:24px; width:45%; }
+    .foot-grid{ grid-template-columns:1fr 1fr; gap:24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site">
+  <div class="wrap nav">
+    <a href="index.html" class="brand">
+      <div class="brand-mark"></div>
+      <div class="brand-name">Pasar<span>Migas</span></div>
+    </a>
+    <nav class="links">
+      <a href="index.html#kategori">Kategori</a>
+      <a href="index.html#listing">Penawaran Aktif</a>
+      <a href="index.html#proses">Cara Kerja</a>
+      <a href="index.html#kontak">Hubungi Kami</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="index.html" class="btn btn-outline btn-sm">← Kembali</a>
+      <button class="btn btn-primary btn-sm" onclick="document.getElementById('formPanel').scrollIntoView({behavior:'smooth'})">Isi Formulir</button>
+    </div>
+  </div>
+</header>
+
+<!-- BUYER HERO -->
+<section class="bhero">
+  <div class="wrap">
+    <div class="eyebrow">Untuk Pembeli Industri</div>
+    <h1>Ajukan Penawaran &amp; Terhubung Langsung dengan <em>Supplier Terverifikasi</em></h1>
+    <p class="lede">Sampaikan kebutuhan volume dan spesifikasi Anda. Tim PasarMigas akan mencocokkan permintaan Anda dengan supplier terverifikasi yang paling sesuai.</p>
+    <div class="bhero-stats">
+      <div class="hstat"><div class="n">1.240</div><div class="l">Supplier terverifikasi</div></div>
+      <div class="hstat"><div class="n">4,2 jam</div><div class="l">Rata-rata SLA respon</div></div>
+      <div class="hstat"><div class="n">99,1%</div><div class="l">Transaksi tanpa sengketa</div></div>
+      <div class="hstat"><div class="n">0%</div><div class="l">Biaya pengajuan</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section id="steps">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Prosesnya Mudah</div>
+      <h2>Cara Kerja Pengajuan Penawaran</h2>
+      <p>Dari pengajuan hingga barang diterima, seluruh proses tercatat dan terverifikasi.</p>
+    </div>
+    <div class="step-grid">
+      <div class="step-card">
+        <div class="si">1</div>
+        <h3>Isi Kebutuhan</h3>
+        <p>Sampaikan jenis produk, volume, dan spesifikasi yang Anda butuhkan.</p>
+      </div>
+      <div class="step-card">
+        <div class="si">2</div>
+        <h3>Dicocokkan Otomatis</h3>
+        <p>Sistem mencocokkan permintaan Anda dengan supplier terverifikasi yang relevan.</p>
+      </div>
+      <div class="step-card">
+        <div class="si">3</div>
+        <h3>Negosiasi &amp; Escrow</h3>
+        <p>Sepakati harga, lalu dana ditahan pihak ketiga hingga barang diterima.</p>
+      </div>
+      <div class="step-card">
+        <div class="si">4</div>
+        <h3>Terima &amp; Konfirmasi</h3>
+        <p>Lacak pengiriman secara real-time hingga barang sampai di lokasi Anda.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section id="formPanel" style="border-bottom:none;">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Formulir Pembeli</div>
+      <h2>Sampaikan Kebutuhan Anda</h2>
+      <p>Lengkapi data di bawah. Tim kami akan menghubungkan Anda dengan supplier terverifikasi dalam 1×24 jam kerja.</p>
+    </div>
+
+    <div class="form-layout" id="formLayout">
+      <div class="form-panel">
+        <div id="buyFormView">
+          <h3>Detail Kebutuhan &amp; Perusahaan</h3>
+          <p class="sub">Data ini digunakan untuk mencocokkan permintaan Anda dengan supplier yang tepat.</p>
+          <form id="buyForm" onsubmit="submitBuyForm(event)">
+            <div class="field-row">
+              <div class="field">
+                <label>Nama Perusahaan</label>
+                <input type="text" id="f-company" required placeholder="PT Contoh Industri" oninput="updateSummary()">
+              </div>
+              <div class="field">
+                <label>Produk yang Dibutuhkan</label>
+                <select id="f-product" oninput="updateSummary()">
+                  <option>Solar / Diesel Industri</option>
+                  <option>Bensin / Avtur</option>
+                  <option>Nafta / LPG</option>
+                  <option>Aspal / Base Oil</option>
+                </select>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label>Perkiraan Volume</label>
+                <input type="text" id="f-vol" required placeholder="500 KL" oninput="updateSummary()">
+              </div>
+              <div class="field">
+                <label>Perkiraan Harga Target (Rp)</label>
+                <input type="text" id="f-price" placeholder="12.400 /liter" oninput="updateSummary()">
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label>Standar Mutu yang Diminta</label>
+                <input type="text" id="f-spec" placeholder="SNI 7431:2015" oninput="updateSummary()">
+              </div>
+              <div class="field">
+                <label>Lokasi Pengiriman</label>
+                <input type="text" id="f-loc" required placeholder="Cilegon, Banten" oninput="updateSummary()">
+              </div>
+            </div>
+            <div class="field">
+              <label>Target Waktu Pengiriman</label>
+              <input type="text" id="f-time" placeholder="Contoh: dalam 2 minggu">
+            </div>
+            <div class="field">
+              <label>Catatan Tambahan</label>
+              <textarea id="f-desc" placeholder="Dokumen yang dibutuhkan, moda pengiriman, ketentuan pembayaran, dll."></textarea>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label>Nomor WhatsApp</label>
+                <input type="tel" required placeholder="08xx xxxx xxxx">
+              </div>
+              <div class="field">
+                <label>Email Perusahaan</label>
+                <input type="email" required placeholder="nama@perusahaan.co.id">
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" style="flex:1">Kirim Permintaan</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="confirm-box" id="confirmView">
+          <div class="ok-mark">✓</div>
+          <h3>Permintaan Terkirim</h3>
+          <p>Tim PasarMigas akan mencocokkan permintaan Anda dengan supplier terverifikasi dan menghubungi Anda melalui WhatsApp dalam 1×24 jam kerja.</p>
+          <div class="ref" id="refCode"></div>
+          <div class="form-actions" style="margin-top:24px; justify-content:center;">
+            <a href="index.html" class="btn btn-outline">Kembali ke Beranda</a>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="summary-label">Ringkasan Permintaan</div>
+        <div class="scard" id="summaryCard">
+          <div class="scard-top">
+            <h4 id="sm-company">Nama perusahaan Anda</h4>
+            <span class="badge badge-request">● Permintaan Baru</span>
+          </div>
+          <div class="spec-row"><span>Produk dibutuhkan</span><span id="sm-product">Solar / Diesel Industri</span></div>
+          <div class="spec-row"><span>Volume</span><span id="sm-vol">—</span></div>
+          <div class="spec-row"><span>Target harga</span><span id="sm-price">—</span></div>
+          <div class="spec-row"><span>Standar mutu</span><span id="sm-spec">—</span></div>
+          <div class="spec-row"><span>Lokasi pengiriman</span><span id="sm-loc">—</span></div>
+          <div class="scard-note">Ringkasan ini akan dikirim ke supplier yang cocok setelah Anda mengirim formulir.</div>
+        </div>
+        <p class="summary-hint">Semakin lengkap detail yang Anda isi, semakin cepat sistem mencocokkan Anda dengan supplier yang tepat.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="kontak">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="brand">
+          <div class="brand-mark"></div>
+          <div class="brand-name">Pasar<span>Migas</span></div>
+        </div>
+        <p>Marketplace B2B untuk perdagangan BBM dan petrokimia industri yang aman, transparan, dan terverifikasi.</p>
+      </div>
+      <div class="foot-col">
+        <h5>Produk</h5>
+        <a href="index.html#kategori">Solar &amp; Diesel</a>
+        <a href="index.html#kategori">Bensin &amp; Avtur</a>
+        <a href="index.html#kategori">Nafta &amp; LPG</a>
+        <a href="index.html#kategori">Aspal &amp; Base Oil</a>
+      </div>
+      <div class="foot-col">
+        <h5>Perusahaan</h5>
+        <a href="index.html#proses">Cara Kerja</a>
+        <a href="#">Kebijakan Verifikasi</a>
+        <a href="#">Karier</a>
+      </div>
+      <div class="foot-col">
+        <h5>Hubungi</h5>
+        <a href="#">cs@pasarmigas.id</a>
+        <a href="#">+62 21 5000 8899</a>
+        <a href="#">Jakarta, Indonesia</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div>© 2026 PasarMigas. Semua hak dilindungi.</div>
+      <div>Terdaftar &amp; diawasi sesuai ketentuan niaga migas nasional</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function updateSummary(){
+    document.getElementById('sm-company').textContent = document.getElementById('f-company').value || 'Nama perusahaan Anda';
+    document.getElementById('sm-product').textContent = document.getElementById('f-product').value;
+    document.getElementById('sm-vol').textContent = document.getElementById('f-vol').value || '—';
+    const price = document.getElementById('f-price').value;
+    document.getElementById('sm-price').textContent = price ? ('Rp ' + price) : '—';
+    document.getElementById('sm-spec').textContent = document.getElementById('f-spec').value || '—';
+    document.getElementById('sm-loc').textContent = document.getElementById('f-loc').value || '—';
+  }
+
+  function submitBuyForm(e){
+    e.preventDefault();
+    document.getElementById('buyFormView').style.display = 'none';
+    document.getElementById('confirmView').classList.add('show');
+    const ref = 'REQ-' + Math.floor(100000 + Math.random()*900000);
+    document.getElementById('refCode').textContent = 'Kode Referensi: ' + ref;
+    window.scrollTo({top: document.getElementById('formPanel').offsetTop - 80, behavior:'smooth'});
+  }
+
+  // Prefill product name from listing card link (?produk=...)
+  (function prefillFromQuery(){
+    const params = new URLSearchParams(window.location.search);
+    const produk = params.get('produk');
+    if(produk){
+      document.getElementById('f-desc').value = 'Tertarik dengan penawaran: ' + produk;
+    }
+  })();
+</script>
+
+</body>
+</html>

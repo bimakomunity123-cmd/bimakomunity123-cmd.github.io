@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cara Kerja — PasarMigas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B0E11; --bg-panel:#12161B; --bg-card:#171C22; --line:#262D35;
+    --steel:#2D8C87; --steel-dim:#1B4F4C; --amber:#E8871E; --amber-bright:#F5A623;
+    --up:#4CAF6D; --down:#E0554A; --text:#EDEFF2; --text-dim:#8B94A0; --text-faint:#5A626C; --radius:3px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{ background:var(--bg); color:var(--text); font-family:'IBM Plex Sans', sans-serif; line-height:1.5; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3,h4{ font-family:'Archivo Narrow', sans-serif; text-transform:uppercase; letter-spacing:0.01em; font-weight:700; }
+  .mono{ font-family:'IBM Plex Mono', monospace; }
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .wrap{ max-width:1200px; margin:0 auto; padding:0 28px; }
+  ::selection{ background:var(--amber); color:#0B0E11; }
+  :focus-visible{ outline: 2px solid var(--amber-bright); outline-offset: 2px; }
+
+  header.site{ position:sticky; top:0; z-index:40; background:rgba(11,14,17,0.92); backdrop-filter: blur(6px); border-bottom:1px solid var(--line); }
+  .nav{ display:flex; align-items:center; justify-content:space-between; padding:16px 0; }
+  .brand{ display:flex; align-items:center; gap:10px; }
+  .brand-mark{ width:30px; height:30px; border:1.5px solid var(--amber); border-radius:2px; display:flex; align-items:center; justify-content:center; position:relative; }
+  .brand-mark::before{ content:''; width:9px; height:9px; background:var(--amber); border-radius:1px; }
+  .brand-name{ font-family:'Archivo Narrow', sans-serif; font-weight:700; font-size:19px; text-transform:uppercase; letter-spacing:0.02em;}
+  .brand-name span{ color:var(--amber); }
+  nav.links{ display:flex; gap:32px; }
+  nav.links a{ font-size:14px; color:var(--text-dim); font-weight:500; transition:color .15s; }
+  nav.links a:hover, nav.links a.active{ color:var(--text); }
+  .nav-cta{ display:flex; gap:10px; align-items:center; }
+  .btn{ font-family:'IBM Plex Sans', sans-serif; font-size:14px; font-weight:600; padding:10px 18px; border-radius:var(--radius); border:1px solid transparent; cursor:pointer; transition:all .15s; display:inline-flex; align-items:center; gap:8px; }
+  .btn-primary{ background:var(--amber); color:#12100B; }
+  .btn-primary:hover{ background:var(--amber-bright); }
+  .btn-outline{ border-color:var(--line); color:var(--text); background:transparent; }
+  .btn-outline:hover{ border-color:var(--text-dim); }
+  .btn-sm{ padding:7px 13px; font-size:13px; }
+
+  .phero{ padding:60px 0 46px; border-bottom:1px solid var(--line);
+    background: radial-gradient(ellipse 700px 380px at 12% 0%, rgba(45,140,135,0.14), transparent 60%), var(--bg); }
+  .eyebrow{ font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--steel); letter-spacing:0.12em; text-transform:uppercase; display:flex; align-items:center; gap:8px; margin-bottom:18px; }
+  .eyebrow::before{ content:''; width:16px; height:1px; background:var(--steel); }
+  .phero h1{ font-size:40px; line-height:1.1; margin-bottom:14px; max-width:720px; }
+  .phero p.lede{ font-size:16px; color:var(--text-dim); max-width:600px; }
+
+  section{ padding:56px 0; border-bottom:1px solid var(--line); }
+  .sec-head{ margin-bottom:32px; }
+  .sec-eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--steel); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:10px;}
+  .sec-head h2{ font-size:26px; margin-bottom:8px;}
+  .sec-head p{ color:var(--text-dim); font-size:14.5px; max-width:540px; }
+
+  /* Detailed steps */
+  .step-list{ display:flex; flex-direction:column; gap:0; }
+  .step-row{ display:grid; grid-template-columns:60px 1fr; gap:24px; padding:28px 0; border-bottom:1px solid var(--line); }
+  .step-row:last-child{ border-bottom:none; }
+  .step-num{ font-family:'IBM Plex Mono',monospace; font-size:15px; color:var(--amber-bright); border:1.5px solid var(--amber); width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+  .step-body h3{ font-size:18px; margin-bottom:8px; text-transform:none; letter-spacing:0; }
+  .step-body p{ font-size:14px; color:var(--text-dim); max-width:640px; margin-bottom:12px; }
+  .step-body ul{ list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .step-body li{ font-size:13.5px; color:var(--text-dim); padding-left:18px; position:relative; }
+  .step-body li::before{ content:'—'; position:absolute; left:0; color:var(--steel); }
+
+  /* FAQ */
+  .faq-item{ border-bottom:1px solid var(--line); }
+  .faq-q{ display:flex; justify-content:space-between; align-items:center; padding:20px 0; cursor:pointer; font-size:15px; font-weight:600; }
+  .faq-q .ic{ font-family:'IBM Plex Mono',monospace; color:var(--amber-bright); transition:transform .2s; }
+  .faq-item.open .faq-q .ic{ transform:rotate(45deg); }
+  .faq-a{ max-height:0; overflow:hidden; transition:max-height .25s ease; }
+  .faq-a p{ font-size:14px; color:var(--text-dim); padding-bottom:20px; max-width:680px; }
+
+  .cta-band{ background: linear-gradient(120deg, #12312F, #0B0E11 65%); border:1px solid var(--steel-dim); border-radius:var(--radius); padding:44px 48px; display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap; }
+  .cta-band h3{ font-size:24px; margin-bottom:8px; }
+  .cta-band p{ color:var(--text-dim); font-size:14px; max-width:440px; }
+  .cta-actions{ display:flex; gap:12px; }
+
+  footer{ padding:44px 0 30px; border-bottom:none; }
+  .foot-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:32px; margin-bottom:36px; }
+  .foot-brand p{ font-size:13px; color:var(--text-faint); margin-top:12px; max-width:260px; }
+  .foot-col h5{ font-size:12px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:14px; font-family:'IBM Plex Mono',monospace; font-weight:500;}
+  .foot-col a{ display:block; font-size:13.5px; color:var(--text-faint); margin-bottom:10px; transition:color .15s;}
+  .foot-col a:hover{ color:var(--text); }
+  .foot-bottom{ border-top:1px solid var(--line); padding-top:20px; display:flex; justify-content:space-between; font-size:12.5px; color:var(--text-faint); font-family:'IBM Plex Mono',monospace; flex-wrap:wrap; gap:10px;}
+
+  @media (max-width: 900px){
+    .foot-grid{ grid-template-columns:1fr 1fr; }
+  }
+  @media (max-width: 640px){
+    nav.links{ display:none; }
+    .phero h1{ font-size:30px; }
+    .step-row{ grid-template-columns:1fr; gap:12px; }
+    .cta-band{ padding:32px 24px; }
+    .foot-grid{ grid-template-columns:1fr 1fr; gap:24px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a href="index.html" class="brand">
+      <div class="brand-mark"></div>
+      <div class="brand-name">Pasar<span>Migas</span></div>
+    </a>
+    <nav class="links">
+      <a href="Kategori.html">Kategori</a>
+      <a href="PenawaranAktif.html">Penawaran Aktif</a>
+      <a href="CaraKerja.html" class="active">Cara Kerja</a>
+      <a href="HubungiKami.html">Hubungi Kami</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="JualProduk.html" class="btn btn-outline btn-sm">Jual Produk</a>
+      <a href="AjukanPenawaran.html" class="btn btn-primary btn-sm">Ajukan Penawaran</a>
+    </div>
+  </div>
+</header>
+
+<section class="phero">
+  <div class="wrap">
+    <div class="eyebrow">Keamanan Transaksi</div>
+    <h1>Cara Kerja PasarMigas</h1>
+    <p class="lede">Empat tahap wajib sebelum barang berpindah tangan — dirancang khusus untuk komoditas bernilai tinggi seperti BBM dan petrokimia, agar setiap transaksi aman bagi penjual maupun pembeli.</p>
+  </div>
+</section>
+
+<section id="langkah">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Alur Transaksi</div>
+      <h2>4 Tahap Wajib Setiap Transaksi</h2>
+      <p>Setiap tahap tercatat dan dapat dipantau oleh kedua belah pihak secara real-time.</p>
+    </div>
+    <div class="step-list">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>Verifikasi Legalitas</h3>
+          <p>Sebelum akun diaktifkan, tim kami memeriksa kelengkapan izin usaha dan legalitas niaga migas calon penjual maupun pembeli.</p>
+          <ul>
+            <li>Izin usaha (NIB) dan izin niaga migas diverifikasi</li>
+            <li>Data perusahaan dicocokkan dengan basis data resmi</li>
+            <li>Akun baru diaktifkan setelah lolos tahap ini</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>Uji Kualitas Independen</h3>
+          <p>Sampel produk diuji oleh laboratorium pihak ketiga sesuai spesifikasi SNI sebelum pengiriman dilakukan.</p>
+          <ul>
+            <li>Sampel diambil dari batch yang akan dikirim</li>
+            <li>Hasil uji dibandingkan dengan standar mutu yang dijanjikan</li>
+            <li>Sertifikat hasil uji dilampirkan pada setiap penawaran</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>Pembayaran via Escrow</h3>
+          <p>Dana dari pembeli ditahan oleh pihak ketiga independen dan hanya dicairkan setelah volume dan kualitas produk terkonfirmasi.</p>
+          <ul>
+            <li>Dana ditahan sejak kesepakatan harga tercapai</li>
+            <li>Pencairan otomatis setelah konfirmasi penerimaan</li>
+            <li>Sengketa ditangani tim mediasi PasarMigas</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>Pengiriman &amp; Pelacakan</h3>
+          <p>Armada tangki yang terintegrasi GPS melacak pengiriman secara real-time hingga titik serah terima.</p>
+          <ul>
+            <li>Estimasi waktu tiba diperbarui otomatis</li>
+            <li>Bukti serah terima didokumentasikan digital</li>
+            <li>Dana escrow cair setelah serah terima terkonfirmasi</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Pertanyaan Umum</div>
+      <h2>FAQ Seputar Transaksi</h2>
+      <p>Belum menemukan jawaban? Hubungi tim kami langsung.</p>
+    </div>
+    <div id="faqList">
+      <div class="faq-item">
+        <div class="faq-q">Berapa lama proses verifikasi legalitas berlangsung? <span class="ic">+</span></div>
+        <div class="faq-a"><p>Rata-rata proses verifikasi legalitas memakan waktu 1×24 jam kerja setelah seluruh dokumen dilengkapi.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Siapa yang menanggung biaya uji kualitas laboratorium? <span class="ic">+</span></div>
+        <div class="faq-a"><p>Biaya uji kualitas awal ditanggung oleh penjual sebagai bagian dari proses verifikasi sebelum penawaran ditayangkan.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Bagaimana jika terjadi sengketa kualitas atau volume? <span class="ic">+</span></div>
+        <div class="faq-a"><p>Tim mediasi PasarMigas akan meninjau bukti uji laboratorium dan dokumen pengiriman sebelum dana escrow dicairkan atau dikembalikan.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Apakah PasarMigas mengenakan komisi transaksi? <span class="ic">+</span></div>
+        <div class="faq-a"><p>Pendaftaran dan pemasangan penawaran gratis. Komisi transaksi hanya dikenakan pada saat transaksi berhasil diselesaikan, dan disampaikan secara transparan di awal.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Bisakah saya melacak pengiriman secara real-time? <span class="ic">+</span></div>
+        <div class="faq-a"><p>Ya, armada tangki yang bekerja sama dengan PasarMigas terintegrasi GPS sehingga status pengiriman dapat dipantau hingga titik serah terima.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="border-bottom:none;">
+  <div class="wrap">
+    <div class="cta-band">
+      <div>
+        <h3>Siap mencoba transaksi yang aman &amp; terverifikasi?</h3>
+        <p>Daftar sebagai penjual untuk memasarkan produk Anda, atau ajukan penawaran pembelian sekarang.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="jual-produk.html" class="btn btn-primary">Daftar Sebagai Penjual</a>
+        <a href="ajukan-penawaran.html" class="btn btn-outline">Ajukan Penawaran</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="kontak-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="brand">
+          <div class="brand-mark"></div>
+          <div class="brand-name">Pasar<span>Migas</span></div>
+        </div>
+        <p>Marketplace B2B untuk perdagangan BBM dan petrokimia industri yang aman, transparan, dan terverifikasi.</p>
+      </div>
+      <div class="foot-col">
+        <h5>Produk</h5>
+        <a href="kategori.html">Solar &amp; Diesel</a>
+        <a href="kategori.html">Bensin &amp; Avtur</a>
+        <a href="kategori.html">Nafta &amp; LPG</a>
+        <a href="kategori.html">Aspal &amp; Base Oil</a>
+      </div>
+      <div class="foot-col">
+        <h5>Perusahaan</h5>
+        <a href="cara-kerja.html">Cara Kerja</a>
+        <a href="#">Kebijakan Verifikasi</a>
+        <a href="#">Karier</a>
+      </div>
+      <div class="foot-col">
+        <h5>Hubungi</h5>
+        <a href="hubungi-kami.html">cs@pasarmigas.id</a>
+        <a href="hubungi-kami.html">+62 21 5000 8899</a>
+        <a href="hubungi-kami.html">Jakarta, Indonesia</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div>© 2026 PasarMigas. Semua hak dilindungi.</div>
+      <div>Terdaftar &amp; diawasi sesuai ketentuan niaga migas nasional</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('faqList').addEventListener('click', (e)=>{
+    const q = e.target.closest('.faq-q');
+    if(!q) return;
+    const item = q.parentElement;
+    const answer = item.querySelector('.faq-a');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i=>{
+      i.classList.remove('open');
+      i.querySelector('.faq-a').style.maxHeight = null;
+    });
+    if(!isOpen){
+      item.classList.add('open');
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+  });
+</script>
+
+</body>
+</html>

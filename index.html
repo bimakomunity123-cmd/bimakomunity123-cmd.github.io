@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PasarMigas — Marketplace BBM & Petrokimia Terverifikasi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B0E11;
+    --bg-panel:#12161B;
+    --bg-card:#171C22;
+    --line: #262D35;
+    --steel:#2D8C87;
+    --steel-dim:#1B4F4C;
+    --amber:#E8871E;
+    --amber-bright:#F5A623;
+    --up:#4CAF6D;
+    --down:#E0554A;
+    --text:#EDEFF2;
+    --text-dim:#8B94A0;
+    --text-faint:#5A626C;
+    --radius: 3px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Archivo Narrow', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+    font-weight:700;
+  }
+  .mono{ font-family:'IBM Plex Mono', monospace; }
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .wrap{ max-width:1200px; margin:0 auto; padding:0 28px; }
+  ::selection{ background:var(--amber); color:#0B0E11; }
+  :focus-visible{ outline: 2px solid var(--amber-bright); outline-offset: 2px; }
+
+  /* ---------- TICKER ---------- */
+  .ticker-bar{
+    background:#08090B;
+    border-bottom:1px solid var(--line);
+    overflow:hidden;
+    white-space:nowrap;
+    position:relative;
+    height:38px;
+    display:flex;
+    align-items:center;
+  }
+  .ticker-track{
+    display:inline-flex;
+    align-items:center;
+    animation: ticker-scroll 38s linear infinite;
+    will-change: transform;
+  }
+  @keyframes ticker-scroll{
+    0%{ transform:translateX(0); }
+    100%{ transform:translateX(-50%); }
+  }
+  .tick{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:0 22px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--text-dim);
+    border-right:1px solid var(--line);
+  }
+  .tick .sym{ color:var(--text); font-weight:600; letter-spacing:0.03em;}
+  .tick .up{ color:var(--up); }
+  .tick .down{ color:var(--down); }
+  @media (prefers-reduced-motion: reduce){
+    .ticker-track{ animation:none; }
+  }
+
+  /* ---------- HEADER ---------- */
+  header.site{
+    position:sticky; top:0; z-index:40;
+    background:rgba(11,14,17,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 0;
+  }
+  .brand{ display:flex; align-items:center; gap:10px; }
+  .brand-mark{
+    width:30px; height:30px;
+    border:1.5px solid var(--amber);
+    border-radius:2px;
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+  }
+  .brand-mark::before{
+    content:'';
+    width:9px; height:9px;
+    background:var(--amber);
+    border-radius:1px;
+  }
+  .brand-name{ font-family:'Archivo Narrow', sans-serif; font-weight:700; font-size:19px; text-transform:uppercase; letter-spacing:0.02em;}
+  .brand-name span{ color:var(--amber); }
+  nav.links{ display:flex; gap:32px; }
+  nav.links a{ font-size:14px; color:var(--text-dim); font-weight:500; transition:color .15s; }
+  nav.links a:hover{ color:var(--text); }
+  .nav-cta{ display:flex; gap:10px; align-items:center; }
+  .btn{
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:14px; font-weight:600;
+    padding:10px 18px;
+    border-radius:var(--radius);
+    border:1px solid transparent;
+    cursor:pointer;
+    transition:all .15s;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-primary{ background:var(--amber); color:#12100B; }
+  .btn-primary:hover{ background:var(--amber-bright); }
+  .btn-outline{ border-color:var(--line); color:var(--text); background:transparent; }
+  .btn-outline:hover{ border-color:var(--text-dim); }
+  .btn-sm{ padding:7px 13px; font-size:13px; }
+  .menu-toggle{ display:none; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:76px 0 60px;
+    border-bottom:1px solid var(--line);
+    background:
+      radial-gradient(ellipse 700px 400px at 85% 0%, rgba(45,140,135,0.14), transparent 60%),
+      var(--bg);
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap:56px;
+    align-items:center;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--amber-bright);
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    display:flex; align-items:center; gap:8px;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{ content:''; width:16px; height:1px; background:var(--amber-bright); }
+  .hero h1{
+    font-size:52px;
+    line-height:1.04;
+    color:var(--text);
+    margin-bottom:22px;
+  }
+  .hero h1 em{ font-style:normal; color:var(--steel); }
+  .hero p.lede{
+    font-size:16.5px;
+    color:var(--text-dim);
+    max-width:520px;
+    margin-bottom:32px;
+  }
+  .hero-actions{ display:flex; gap:12px; margin-bottom:44px; flex-wrap:wrap;}
+  .hero-stats{
+    display:flex; gap:0;
+    border-top:1px solid var(--line);
+    padding-top:22px;
+  }
+  .hstat{ padding-right:34px; margin-right:34px; border-right:1px solid var(--line); }
+  .hstat:last-child{ border-right:none; margin-right:0; padding-right:0;}
+  .hstat .n{ font-family:'IBM Plex Mono',monospace; font-size:24px; font-weight:600; color:var(--text); }
+  .hstat .l{ font-size:12px; color:var(--text-faint); margin-top:2px; }
+
+  /* Gauge signature element */
+  .gauge-panel{
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:26px 26px 22px;
+  }
+  .gauge-panel .gp-head{
+    display:flex; justify-content:space-between; align-items:baseline;
+    margin-bottom:6px;
+  }
+  .gauge-panel .gp-title{ font-size:12px; color:var(--text-dim); font-family:'IBM Plex Mono',monospace; letter-spacing:0.05em; text-transform:uppercase;}
+  .gauge-panel .gp-live{ font-size:11px; color:var(--up); display:flex; align-items:center; gap:5px; font-family:'IBM Plex Mono',monospace;}
+  .gauge-panel .gp-live::before{ content:''; width:6px; height:6px; border-radius:50%; background:var(--up); box-shadow:0 0 0 3px rgba(76,175,109,0.18); animation:pulse 1.8s infinite; }
+  @keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+
+  .gauge-wrap{ position:relative; width:100%; padding-top:58%; margin:14px 0 10px; }
+  .gauge-svg{ position:absolute; top:0; left:0; width:100%; height:100%; }
+  .gauge-readout{ text-align:center; margin-top:-6px; }
+  .gauge-readout .val{ font-family:'IBM Plex Mono',monospace; font-size:34px; font-weight:600; color:var(--amber-bright); }
+  .gauge-readout .unit{ font-size:13px; color:var(--text-dim); }
+  .gauge-readout .cap{ font-size:12px; color:var(--text-faint); margin-top:4px; }
+  .gp-foot{
+    display:flex; justify-content:space-between;
+    border-top:1px solid var(--line);
+    margin-top:18px; padding-top:14px;
+    font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-dim);
+  }
+  .gp-foot b{ color:var(--text); }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{ padding:70px 0; border-bottom:1px solid var(--line); }
+  .sec-head{ display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:36px; gap:20px; flex-wrap:wrap; }
+  .sec-eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--steel); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:10px;}
+  .sec-head h2{ font-size:30px; }
+  .sec-head p{ color:var(--text-dim); font-size:14.5px; max-width:440px; }
+
+  /* ---------- CATEGORIES ---------- */
+  .cat-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+  .cat-card{ background:var(--bg-card); padding:26px 22px; cursor:pointer; transition:background .15s; position:relative; }
+  .cat-card:hover{ background:#1B2027; }
+  .cat-card .ci{ font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-faint); margin-bottom:20px;}
+  .cat-card h3{ font-size:17px; margin-bottom:8px; }
+  .cat-card p{ font-size:13px; color:var(--text-dim); }
+  .cat-card .count{ margin-top:16px; font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--amber-bright); }
+
+  /* ---------- LISTINGS ---------- */
+  .filter-row{ display:flex; gap:10px; margin-bottom:26px; flex-wrap:wrap; }
+  .chip{
+    font-family:'IBM Plex Mono',monospace; font-size:12.5px;
+    padding:8px 14px; border:1px solid var(--line); border-radius:20px;
+    color:var(--text-dim); cursor:pointer; transition:all .15s; background:transparent;
+  }
+  .chip.active{ background:var(--steel-dim); border-color:var(--steel); color:var(--text); }
+  .chip:hover{ border-color:var(--text-dim); }
+
+  .listing-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+  .lcard{
+    background:var(--bg-card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:20px; display:flex; flex-direction:column; gap:14px;
+    transition:border-color .15s, transform .15s;
+  }
+  .lcard:hover{ border-color:#3A424C; transform:translateY(-2px); }
+  .lcard-top{ display:flex; justify-content:space-between; align-items:flex-start; }
+  .lcard-top h4{ font-size:16px; text-transform:none; letter-spacing:0; }
+  .badge{
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.03em;
+    padding:3px 8px; border-radius:2px; white-space:nowrap;
+  }
+  .badge-verified{ background:rgba(45,140,135,0.15); color:var(--steel); border:1px solid var(--steel-dim); }
+  .spec-row{ display:flex; justify-content:space-between; font-size:13px; color:var(--text-dim); border-top:1px dashed var(--line); padding-top:10px; }
+  .spec-row span:last-child{ color:var(--text); font-family:'IBM Plex Mono',monospace; font-size:12.5px; }
+  .lcard-price{ display:flex; justify-content:space-between; align-items:baseline; margin-top:auto; padding-top:6px; }
+  .lcard-price .p{ font-family:'IBM Plex Mono',monospace; font-size:19px; font-weight:600; color:var(--amber-bright); }
+  .lcard-price .u{ font-size:12px; color:var(--text-faint); }
+  .lcard-loc{ font-size:12.5px; color:var(--text-faint); display:flex; align-items:center; gap:5px; }
+
+  /* ---------- PROCESS ---------- */
+  .process{ display:grid; grid-template-columns:repeat(4,1fr); gap:0; position:relative; }
+  .pstep{ padding:0 22px 0 0; position:relative; }
+  .pstep:not(:last-child)::after{
+    content:''; position:absolute; top:19px; right:0; width:22px; height:1px; background:var(--line);
+  }
+  .pstep .pn{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--amber-bright); border:1px solid var(--amber); width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:18px; }
+  .pstep h4{ font-size:15.5px; margin-bottom:8px; text-transform:none; letter-spacing:0; }
+  .pstep p{ font-size:13.5px; color:var(--text-dim); }
+
+  /* ---------- CTA ---------- */
+  .cta-band{
+    background: linear-gradient(120deg, #12312F, #0B0E11 65%);
+    border:1px solid var(--steel-dim);
+    border-radius:var(--radius);
+    padding:44px 48px;
+    display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap;
+  }
+  .cta-band h3{ font-size:24px; margin-bottom:8px; }
+  .cta-band p{ color:var(--text-dim); font-size:14px; max-width:440px; }
+  .cta-actions{ display:flex; gap:12px; }
+
+  /* ---------- FOOTER ---------- */
+  footer{ padding:44px 0 30px; }
+  .foot-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:32px; margin-bottom:36px; }
+  .foot-brand p{ font-size:13px; color:var(--text-faint); margin-top:12px; max-width:260px; }
+  .foot-col h5{ font-size:12px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:14px; font-family:'IBM Plex Mono',monospace; font-weight:500;}
+  .foot-col a{ display:block; font-size:13.5px; color:var(--text-faint); margin-bottom:10px; transition:color .15s;}
+  .foot-col a:hover{ color:var(--text); }
+  .foot-bottom{ border-top:1px solid var(--line); padding-top:20px; display:flex; justify-content:space-between; font-size:12.5px; color:var(--text-faint); font-family:'IBM Plex Mono',monospace; flex-wrap:wrap; gap:10px;}
+
+  /* ---------- MODAL ---------- */
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(6,8,10,0.72);
+    display:none; align-items:center; justify-content:center; z-index:100; padding:20px;
+  }
+  .modal-overlay.open{ display:flex; }
+  .modal{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+    width:100%; max-width:440px; padding:30px;
+  }
+  .modal h3{ font-size:19px; margin-bottom:6px; text-transform:none; letter-spacing:0; }
+  .modal p.sub{ font-size:13px; color:var(--text-dim); margin-bottom:22px; }
+  .field{ margin-bottom:16px; }
+  .field label{ display:block; font-size:12px; color:var(--text-dim); margin-bottom:6px; font-family:'IBM Plex Mono',monospace; }
+  .field input, .field select{
+    width:100%; background:#0D1013; border:1px solid var(--line); color:var(--text);
+    padding:10px 12px; border-radius:2px; font-size:14px; font-family:'IBM Plex Sans',sans-serif;
+  }
+  .field input:focus, .field select:focus{ border-color:var(--steel); outline:none; }
+  .modal-actions{ display:flex; gap:10px; margin-top:22px; }
+  .modal-close{ position:absolute; top:20px; right:20px; background:none; border:none; color:var(--text-dim); font-size:20px; cursor:pointer; }
+  .modal{ position:relative; }
+  .confirm-box{ display:none; text-align:center; padding:10px 0; }
+  .confirm-box.show{ display:block; }
+  .confirm-box .ok-mark{ width:44px; height:44px; border:1.5px solid var(--up); border-radius:50%; margin:0 auto 16px; display:flex; align-items:center; justify-content:center; color:var(--up); font-size:20px; }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .cat-grid{ grid-template-columns:repeat(2,1fr); }
+    .listing-grid{ grid-template-columns:repeat(2,1fr); }
+    .process{ grid-template-columns:repeat(2,1fr); gap:28px 0; }
+    .pstep::after{ display:none; }
+    .foot-grid{ grid-template-columns:1fr 1fr; }
+  }
+  @media (max-width: 640px){
+    nav.links{ display:none; }
+    .hero h1{ font-size:36px; }
+    .hero-stats{ flex-wrap:wrap; gap:18px 0; }
+    .hstat{ border-right:none; margin-right:0; padding-right:24px; width:45%; }
+    .cat-grid{ grid-template-columns:1fr; }
+    .listing-grid{ grid-template-columns:1fr; }
+    .process{ grid-template-columns:1fr; }
+    .foot-grid{ grid-template-columns:1fr 1fr; gap:24px; }
+    .cta-band{ padding:32px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker-bar">
+  <div class="ticker-track" id="tickerTrack"></div>
+</div>
+
+<!-- HEADER -->
+<header class="site">
+  <div class="wrap nav">
+    <div class="brand">
+      <div class="brand-mark"></div>
+      <div class="brand-name"><a href="#">Pasar<span>Migas</span></div></a>
+    </div>
+    <nav class="links">
+      <a href="Kategori.html">Kategori</a>
+      <a href="PenawaranAktif.html">Penawaran Aktif</a>
+      <a href="CaraKerja.html">Cara Kerja</a>
+      <a href="HubungiKami.html">Hubungi Kami</a>
+    </nav>
+    <div class="nav-cta">
+      <button class="btn btn-outline btn-sm"><a href="JualProduk.html">Jual Produk</a></button>
+      <button class="btn btn-primary btn-sm"><a href="AjukanPenawaran.html">Ajukan Penawaran</a></button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" style="border-bottom:1px solid var(--line); padding-bottom:60px;">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Marketplace B2B Migas Indonesia</div>
+      <h1>Perdagangan BBM &amp; petrokimia, <em>terverifikasi</em> dari tangki ke tangki.</h1>
+      <p class="lede">PasarMigas mempertemukan produsen, distributor, dan industri pengguna untuk transaksi bahan bakar minyak dan produk petrokimia dalam jumlah besar — dengan verifikasi legalitas, uji kualitas laboratorium, dan skema pembayaran aman.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="openModal('beli')">Cari Penawaran &nbsp;→</button>
+        <button class="btn btn-outline" onclick="openModal('jual')">Daftar Sebagai Penjual</button>
+      </div>
+      <div class="hero-stats">
+        <div class="hstat"><div class="n">1.240</div><div class="l">Supplier terverifikasi</div></div>
+        <div class="hstat"><div class="n">86,4 rb KL</div><div class="l">Volume transaksi / bulan</div></div>
+        <div class="hstat"><div class="n">34</div><div class="l">Provinsi terjangkau</div></div>
+        <div class="hstat"><div class="n">99,1%</div><div class="l">Transaksi tanpa sengketa</div></div>
+      </div>
+    </div>
+
+    <div class="gauge-panel">
+      <div class="gp-head">
+        <div class="gp-title">Kapasitas Verifikasi Bulan Ini</div>
+        <div class="gp-live">Live</div>
+      </div>
+      <div class="gauge-wrap">
+        <svg class="gauge-svg" viewBox="0 0 200 130" id="gaugeSvg">
+          <path d="M20 110 A80 80 0 0 1 180 110" fill="none" stroke="#20262E" stroke-width="14" stroke-linecap="round"/>
+          <path id="gaugeArc" d="M20 110 A80 80 0 0 1 180 110" fill="none" stroke="url(#gaugeGrad)" stroke-width="14" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="251"/>
+          <defs>
+            <linearGradient id="gaugeGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#2D8C87"/>
+              <stop offset="100%" stop-color="#E8871E"/>
+            </linearGradient>
+          </defs>
+          <line id="gaugeNeedle" x1="100" y1="110" x2="100" y2="42" stroke="#EDEFF2" stroke-width="2.5" stroke-linecap="round" transform="rotate(-90 100 110)"/>
+          <circle cx="100" cy="110" r="5" fill="#EDEFF2"/>
+        </svg>
+      </div>
+      <div class="gauge-readout">
+        <span class="val" id="gaugeVal">0</span><span class="unit">% terisi kuota audit</span>
+        <div class="cap">dari target 2.000 pengiriman diverifikasi</div>
+      </div>
+      <div class="gp-foot">
+        <div>Batch diproses <b>1.812</b></div>
+        <div>Rata-rata SLA <b>4,2 jam</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KATEGORI -->
+<section id="kategori">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="sec-eyebrow">Katalog Produk</div>
+        <h2>Kategori BBM &amp; Petrokimia</h2>
+      </div>
+      <p>Setiap kategori tercatat dengan spesifikasi SNI, sertifikat uji laboratorium, dan riwayat harga pasar.</p>
+    </div>
+    <div class="cat-grid">
+      <div class="cat-card" onclick="filterByCategory('BBM')">
+        <div class="ci">01 — BAHAN BAKAR</div>
+        <h3>Solar &amp; Diesel Industri</h3>
+        <p>Solar CN48, Biosolar B35, dan diesel industri untuk pabrik, kapal, dan alat berat.</p>
+        <div class="count">312 penawaran aktif</div>
+      </div>
+      <div class="cat-card" onclick="filterByCategory('BBM')">
+        <div class="ci">02 — BAHAN BAKAR</div>
+        <h3>Bensin &amp; Avtur</h3>
+        <p>Pertalite, Pertamax series, dan Avtur Jet A-1 dengan sertifikat quality control.</p>
+        <div class="count">198 penawaran aktif</div>
+      </div>
+      <div class="cat-card" onclick="filterByCategory('Petrokimia')">
+        <div class="ci">03 — PETROKIMIA</div>
+        <h3>Nafta &amp; LPG</h3>
+        <p>Bahan baku petrokimia hulu: nafta, LPG mix, dan propylene untuk industri manufaktur.</p>
+        <div class="count">147 penawaran aktif</div>
+      </div>
+      <div class="cat-card" onclick="filterByCategory('Petrokimia')">
+        <div class="ci">04 — PETROKIMIA</div>
+        <h3>Aspal &amp; Base Oil</h3>
+        <p>Aspal curah untuk konstruksi jalan serta base oil dan pelumas dasar industri.</p>
+        <div class="count">89 penawaran aktif</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LISTING -->
+<section id="listing">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="sec-eyebrow">Papan Penawaran</div>
+        <h2>Penawaran Aktif Hari Ini</h2>
+      </div>
+      <p>Diperbarui otomatis dari supplier terverifikasi. Klik "Ajukan Penawaran" untuk terhubung langsung dengan penjual.</p>
+    </div>
+    <div class="filter-row" id="filterRow">
+      <button class="chip active" data-cat="Semua">Semua</button>
+      <button class="chip" data-cat="BBM">BBM</button>
+      <button class="chip" data-cat="Petrokimia">Petrokimia</button>
+    </div>
+    <div class="listing-grid" id="listingGrid"></div>
+  </div>
+</section>
+
+<!-- PROSES -->
+<section id="proses">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="sec-eyebrow">Keamanan Transaksi</div>
+        <h2>Cara Kerja PasarMigas</h2>
+      </div>
+      <p>Empat tahap wajib sebelum barang berpindah tangan — dirancang khusus untuk komoditas bernilai tinggi.</p>
+    </div>
+    <div class="process">
+      <div class="pstep">
+        <div class="pn">1</div>
+        <h4>Verifikasi Legalitas</h4>
+        <p>Izin usaha, NIB, dan izin niaga migas diperiksa sebelum akun diaktifkan.</p>
+      </div>
+      <div class="pstep">
+        <div class="pn">2</div>
+        <h4>Uji Kualitas Independen</h4>
+        <p>Sampel diuji laboratorium pihak ketiga sesuai spesifikasi SNI sebelum pengiriman.</p>
+      </div>
+      <div class="pstep">
+        <div class="pn">3</div>
+        <h4>Pembayaran via Escrow</h4>
+        <p>Dana ditahan pihak ketiga dan dicairkan setelah volume dan kualitas dikonfirmasi.</p>
+      </div>
+      <div class="pstep">
+        <div class="pn">4</div>
+        <h4>Pengiriman &amp; Pelacakan</h4>
+        <p>Armada tangki terintegrasi GPS melacak pengiriman hingga titik serah terima.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="border-bottom:none;">
+  <div class="wrap">
+    <div class="cta-band">
+      <div>
+        <h3>Siap memperluas jaringan niaga migas Anda?</h3>
+        <p>Bergabung sebagai penjual untuk menjangkau pembeli industri di seluruh Indonesia, atau ajukan penawaran pembelian dalam hitungan menit.</p>
+      </div>
+      <div class="cta-actions">
+        <button class="btn btn-primary" onclick="openModal('jual')">Daftar Sebagai Penjual</button>
+        <button class="btn btn-outline" onclick="openModal('beli')">Ajukan Penawaran</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="kontak">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="brand">
+          <div class="brand-mark"></div>
+          <div class="brand-name">Pasar<span>Migas</span></div>
+        </div>
+        <p>Marketplace B2B untuk perdagangan BBM dan petrokimia industri yang aman, transparan, dan terverifikasi.</p>
+      </div>
+      <div class="foot-col">
+        <h5>Produk</h5>
+        <a href="#kategori">Solar &amp; Diesel</a>
+        <a href="#kategori">Bensin &amp; Avtur</a>
+        <a href="#kategori">Nafta &amp; LPG</a>
+        <a href="#kategori">Aspal &amp; Base Oil</a>
+      </div>
+      <div class="foot-col">
+        <h5>Perusahaan</h5>
+        <a href="#proses">Cara Kerja</a>
+        <a href="#">Kebijakan Verifikasi</a>
+        <a href="#">Karier</a>
+      </div>
+      <div class="foot-col">
+        <h5>Hubungi</h5>
+        <a href="#">cs@pasarmigas.id</a>
+        <a href="https://login.live.com/login.srf?wa=wsignin1.0&rpsnv=16&ct=1735567890&rver=7.0.0.0&wp=MBI&wreply=https%3a%2f%2foutlook.live.com%2fowa%2f%3fnlp%3d1%26RpsCookies%3d1&id=292841&aadredir=1&cobrandid=90015">+62 21 5000 8899</a>
+        <a href="#">Jakarta, Indonesia</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div>© 2026 PasarMigas. Semua hak dilindungi.</div>
+      <div>Terdaftar &amp; diawasi sesuai ketentuan niaga migas nasional</div>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div id="formView">
+      <h3 id="modalTitle">Ajukan Penawaran</h3>
+      <p class="sub" id="modalSub">Isi data berikut, tim kami akan menghubungkan Anda dengan supplier terverifikasi.</p>
+      <form id="modalForm" onsubmit="submitForm(event)">
+        <div class="field">
+          <label>Nama Perusahaan</label>
+          <input type="text" required placeholder="PT Contoh Industri">
+        </div>
+        <div class="field">
+          <label>Produk</label>
+          <select>
+            <option>Solar / Diesel Industri</option>
+            <option>Bensin / Avtur</option>
+            <option>Nafta / LPG</option>
+            <option>Aspal / Base Oil</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Perkiraan Volume (Kiloliter)</label>
+          <input type="number" required placeholder="500">
+        </div>
+        <div class="field">
+          <label>Nomor WhatsApp</label>
+          <input type="tel" required placeholder="08xx xxxx xxxx">
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" style="flex:1" onclick="closeModal()">Batal</button>
+          <button type="submit" class="btn btn-primary" style="flex:1" id="modalSubmitBtn">Kirim</button>
+        </div>
+      </form>
+    </div>
+    <div class="confirm-box" id="confirmView">
+      <div class="ok-mark">✓</div>
+      <h3 style="margin-bottom:8px;">Permintaan Terkirim</h3>
+      <p class="sub" style="margin-bottom:0;">Tim PasarMigas akan menghubungi Anda dalam 1×24 jam kerja melalui WhatsApp.</p>
+      <button class="btn btn-primary" style="width:100%; margin-top:20px;" onclick="closeModal()">Selesai</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ---------- TICKER DATA ----------
+  const tickerData = [
+    {sym:'SOLAR CN48', price:'Rp 12.450', unit:'/L', chg:'+0,4%', up:true},
+    {sym:'PERTALITE', price:'Rp 10.300', unit:'/L', chg:'0,0%', up:true},
+    {sym:'PERTAMAX', price:'Rp 13.150', unit:'/L', chg:'+0,8%', up:true},
+    {sym:'AVTUR JET A-1', price:'Rp 14.720', unit:'/L', chg:'-0,3%', up:false},
+    {sym:'ICP CRUDE', price:'US$ 74,80', unit:'/bbl', chg:'+1,2%', up:true},
+    {sym:'LPG MIX', price:'Rp 8.950', unit:'/kg', chg:'-0,6%', up:false},
+    {sym:'NAFTA', price:'US$ 612', unit:'/ton', chg:'+0,9%', up:true},
+    {sym:'ASPAL CURAH', price:'Rp 9.100', unit:'/kg', chg:'0,0%', up:true},
+    {sym:'BASE OIL SN500', price:'Rp 16.300', unit:'/L', chg:'+0,5%', up:true},
+  ];
+  function buildTicker(){
+    const track = document.getElementById('tickerTrack');
+    const set = tickerData.map(t=>`
+      <div class="tick">
+        <span class="sym">${t.sym}</span>
+        <span>${t.price}<span style="color:var(--text-faint)">${t.unit}</span></span>
+        <span class="${t.up?'up':'down'}">${t.up?'▲':'▼'} ${t.chg}</span>
+      </div>`).join('');
+    track.innerHTML = set + set; // duplicate for seamless loop
+  }
+  buildTicker();
+
+  // ---------- GAUGE ANIMATION ----------
+  function animateGauge(){
+    const targetPct = 91; // 1812/2000
+    const arc = document.getElementById('gaugeArc');
+    const needle = document.getElementById('gaugeNeedle');
+    const valEl = document.getElementById('gaugeVal');
+    const circumference = 251;
+    let start = null;
+    const duration = 1400;
+    function step(ts){
+      if(!start) start = ts;
+      const progress = Math.min((ts-start)/duration, 1);
+      const eased = 1 - Math.pow(1-progress, 3);
+      const pct = eased * targetPct;
+      arc.style.strokeDashoffset = circumference - (circumference * pct/100);
+      const angle = -90 + (pct/100 * 180);
+      needle.setAttribute('transform', `rotate(${angle} 100 110)`);
+      valEl.textContent = Math.round(pct);
+      if(progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  animateGauge();
+
+  // ---------- LISTINGS ----------
+  const listings = [
+    {cat:'BBM', name:'Solar Industri CN48', seller:'PT Cipta Energi Nusantara', loc:'Cilegon, Banten', vol:'500 KL', spec:'SNI 7431:2015', price:'Rp 12.400', unit:'/liter'},
+    {cat:'BBM', name:'Biosolar B35 Curah', seller:'CV Sumber Bahan Bakar', loc:'Surabaya, Jatim', vol:'250 KL', spec:'SNI 7431:2015', price:'Rp 12.150', unit:'/liter'},
+    {cat:'BBM', name:'Pertamax Series Grosir', seller:'PT Distribusi Migas Jaya', loc:'Balikpapan, Kaltim', vol:'180 KL', spec:'RON 92', price:'Rp 13.050', unit:'/liter'},
+    {cat:'BBM', name:'Avtur Jet A-1', seller:'PT Aviasi Bahan Bakar', loc:'Tangerang, Banten', vol:'320 KL', spec:'DEF STAN 91-091', price:'Rp 14.600', unit:'/liter'},
+    {cat:'Petrokimia', name:'Nafta Petrokimia Grade', seller:'PT Petro Hulu Indonesia', loc:'Dumai, Riau', vol:'800 Ton', spec:'ASTM D86', price:'US$ 605', unit:'/ton'},
+    {cat:'Petrokimia', name:'LPG Mix Industri', seller:'CV Gas Nusantara', loc:'Bontang, Kaltim', vol:'400 Ton', spec:'SNI 7369:2011', price:'Rp 8.800', unit:'/kg'},
+    {cat:'Petrokimia', name:'Aspal Curah Pen 60/70', seller:'PT Konstruksi Aspal Indo', loc:'Gresik, Jatim', vol:'600 Ton', spec:'SNI 06-2456-1991', price:'Rp 9.050', unit:'/kg'},
+    {cat:'Petrokimia', name:'Base Oil SN500', seller:'PT Pelumas Dasar Nasional', loc:'Cikarang, Jabar', vol:'150 KL', spec:'API Group I', price:'Rp 16.100', unit:'/liter'},
+    {cat:'BBM', name:'Diesel Industri Marine', seller:'PT Bahan Bakar Pelayaran', loc:'Batam, Kepri', vol:'700 KL', spec:'ISO 8217 DMA', price:'Rp 12.900', unit:'/liter'},
+  ];
+  function renderListings(filter){
+    const grid = document.getElementById('listingGrid');
+    const items = filter === 'Semua' ? listings : listings.filter(l=>l.cat===filter);
+    grid.innerHTML = items.map(l => `
+      <div class="lcard">
+        <div class="lcard-top">
+          <h4>${l.name}</h4>
+          <span class="badge badge-verified">✓ Terverifikasi</span>
+        </div>
+        <div class="lcard-loc">${l.seller} — ${l.loc}</div>
+        <div class="spec-row"><span>Volume tersedia</span><span>${l.vol}</span></div>
+        <div class="spec-row"><span>Standar mutu</span><span>${l.spec}</span></div>
+        <div class="lcard-price">
+          <div><span class="p">${l.price}</span> <span class="u">${l.unit}</span></div>
+          <button class="btn btn-primary btn-sm" onclick="openModal('beli')">Ajukan</button>
+        </div>
+      </div>
+    `).join('');
+  }
+  renderListings('Semua');
+
+  document.getElementById('filterRow').addEventListener('click', (e)=>{
+    if(!e.target.classList.contains('chip')) return;
+    document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+    e.target.classList.add('active');
+    renderListings(e.target.dataset.cat);
+  });
+
+  function filterByCategory(cat){
+    document.getElementById('listing').scrollIntoView({behavior:'smooth'});
+    document.querySelectorAll('.chip').forEach(c=>{
+      c.classList.toggle('active', c.dataset.cat === cat);
+    });
+    renderListings(cat);
+  }
+
+  // ---------- MODAL ----------
+  function openModal(type){
+    const overlay = document.getElementById('modalOverlay');
+    const title = document.getElementById('modalTitle');
+    const sub = document.getElementById('modalSub');
+    const submitBtn = document.getElementById('modalSubmitBtn');
+    document.getElementById('formView').style.display = 'block';
+    document.getElementById('confirmView').classList.remove('show');
+    document.getElementById('modalForm').reset();
+    if(type === 'jual'){
+      title.textContent = 'Daftar Sebagai Penjual';
+      sub.textContent = 'Lengkapi data perusahaan Anda untuk mulai memasarkan produk di PasarMigas.';
+      submitBtn.textContent = 'Daftar Sekarang';
+    } else {
+      title.textContent = 'Ajukan Penawaran';
+      sub.textContent = 'Isi data berikut, tim kami akan menghubungkan Anda dengan supplier terverifikasi.';
+      submitBtn.textContent = 'Kirim Permintaan';
+    }
+    overlay.classList.add('open');
+  }
+  function closeModal(){
+    document.getElementById('modalOverlay').classList.remove('open');
+  }
+  function submitForm(e){
+    e.preventDefault();
+    document.getElementById('formView').style.display = 'none';
+    document.getElementById('confirmView').classList.add('show');
+  }
+  document.getElementById('modalOverlay').addEventListener('click', (e)=>{
+    if(e.target.id === 'modalOverlay') closeModal();
+  });
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape') closeModal();
+  });
+</script>
+
+</body>
+</html>

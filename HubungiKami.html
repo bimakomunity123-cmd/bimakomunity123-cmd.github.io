@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hubungi Kami — PasarMigas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B0E11; --bg-panel:#12161B; --bg-card:#171C22; --line:#262D35;
+    --steel:#2D8C87; --steel-dim:#1B4F4C; --amber:#E8871E; --amber-bright:#F5A623;
+    --up:#4CAF6D; --down:#E0554A; --text:#EDEFF2; --text-dim:#8B94A0; --text-faint:#5A626C; --radius:3px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{ background:var(--bg); color:var(--text); font-family:'IBM Plex Sans', sans-serif; line-height:1.5; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3,h4{ font-family:'Archivo Narrow', sans-serif; text-transform:uppercase; letter-spacing:0.01em; font-weight:700; }
+  .mono{ font-family:'IBM Plex Mono', monospace; }
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .wrap{ max-width:1200px; margin:0 auto; padding:0 28px; }
+  ::selection{ background:var(--amber); color:#0B0E11; }
+  :focus-visible{ outline: 2px solid var(--amber-bright); outline-offset: 2px; }
+
+  header.site{ position:sticky; top:0; z-index:40; background:rgba(11,14,17,0.92); backdrop-filter: blur(6px); border-bottom:1px solid var(--line); }
+  .nav{ display:flex; align-items:center; justify-content:space-between; padding:16px 0; }
+  .brand{ display:flex; align-items:center; gap:10px; }
+  .brand-mark{ width:30px; height:30px; border:1.5px solid var(--amber); border-radius:2px; display:flex; align-items:center; justify-content:center; position:relative; }
+  .brand-mark::before{ content:''; width:9px; height:9px; background:var(--amber); border-radius:1px; }
+  .brand-name{ font-family:'Archivo Narrow', sans-serif; font-weight:700; font-size:19px; text-transform:uppercase; letter-spacing:0.02em;}
+  .brand-name span{ color:var(--amber); }
+  nav.links{ display:flex; gap:32px; }
+  nav.links a{ font-size:14px; color:var(--text-dim); font-weight:500; transition:color .15s; }
+  nav.links a:hover, nav.links a.active{ color:var(--text); }
+  .nav-cta{ display:flex; gap:10px; align-items:center; }
+  .btn{ font-family:'IBM Plex Sans', sans-serif; font-size:14px; font-weight:600; padding:10px 18px; border-radius:var(--radius); border:1px solid transparent; cursor:pointer; transition:all .15s; display:inline-flex; align-items:center; gap:8px; }
+  .btn-primary{ background:var(--amber); color:#12100B; }
+  .btn-primary:hover{ background:var(--amber-bright); }
+  .btn-outline{ border-color:var(--line); color:var(--text); background:transparent; }
+  .btn-outline:hover{ border-color:var(--text-dim); }
+  .btn-sm{ padding:7px 13px; font-size:13px; }
+
+  .phero{ padding:60px 0 46px; border-bottom:1px solid var(--line);
+    background: radial-gradient(ellipse 700px 380px at 88% 0%, rgba(45,140,135,0.14), transparent 60%), var(--bg); }
+  .eyebrow{ font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--steel); letter-spacing:0.12em; text-transform:uppercase; display:flex; align-items:center; gap:8px; margin-bottom:18px; }
+  .eyebrow::before{ content:''; width:16px; height:1px; background:var(--steel); }
+  .phero h1{ font-size:40px; line-height:1.1; margin-bottom:14px; max-width:720px; }
+  .phero p.lede{ font-size:16px; color:var(--text-dim); max-width:600px; }
+
+  section{ padding:56px 0; border-bottom:1px solid var(--line); }
+  .sec-head{ margin-bottom:32px; }
+  .sec-eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--steel); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:10px;}
+  .sec-head h2{ font-size:26px; margin-bottom:8px;}
+  .sec-head p{ color:var(--text-dim); font-size:14.5px; max-width:540px; }
+
+  /* Contact info cards */
+  .info-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-bottom:0; }
+  .info-card{ background:var(--bg-card); padding:24px 20px; }
+  .info-card .ii{ font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-faint); margin-bottom:16px;}
+  .info-card h3{ font-size:14.5px; margin-bottom:8px; text-transform:none; letter-spacing:0; }
+  .info-card p{ font-size:13.5px; color:var(--text-dim); }
+  .info-card a.link{ color:var(--amber-bright); font-size:13px; display:inline-block; margin-top:8px; }
+
+  /* Form + map layout */
+  .contact-layout{ display:grid; grid-template-columns:1.2fr 0.8fr; gap:28px; align-items:flex-start; margin-top:40px; }
+  .form-panel{ background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius); padding:32px; }
+  .form-panel h3{ font-size:19px; margin-bottom:6px; text-transform:none; letter-spacing:0; }
+  .form-panel p.sub{ font-size:13px; color:var(--text-dim); margin-bottom:26px; }
+  .field-row{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .field{ margin-bottom:18px; }
+  .field label{ display:block; font-size:12px; color:var(--text-dim); margin-bottom:6px; font-family:'IBM Plex Mono',monospace; }
+  .field input, .field select, .field textarea{ width:100%; background:#0D1013; border:1px solid var(--line); color:var(--text); padding:11px 12px; border-radius:2px; font-size:14px; font-family:'IBM Plex Sans',sans-serif; }
+  .field textarea{ resize:vertical; min-height:110px; }
+  .field input:focus, .field select:focus, .field textarea:focus{ border-color:var(--steel); outline:none; }
+  .form-actions{ display:flex; gap:10px; margin-top:8px; }
+
+  .side-panel{ background:var(--bg-card); border:1px solid var(--line); border-radius:var(--radius); padding:26px; }
+  .side-panel h4{ font-size:15px; margin-bottom:14px; text-transform:none; letter-spacing:0; }
+  .hours-row{ display:flex; justify-content:space-between; font-size:13.5px; color:var(--text-dim); padding:10px 0; border-bottom:1px dashed var(--line); }
+  .hours-row:last-child{ border-bottom:none; }
+  .hours-row span:last-child{ color:var(--text); font-family:'IBM Plex Mono',monospace; font-size:13px; }
+  .map-box{ margin-top:18px; border:1px solid var(--line); border-radius:var(--radius); height:160px; display:flex; align-items:center; justify-content:center; background:
+      repeating-linear-gradient(45deg, #171C22, #171C22 10px, #12161B 10px, #12161B 20px); color:var(--text-faint); font-family:'IBM Plex Mono',monospace; font-size:12px; }
+
+  /* Confirm view */
+  .confirm-box{ display:none; text-align:center; padding:40px 20px; }
+  .confirm-box.show{ display:block; }
+  .confirm-box .ok-mark{ width:50px; height:50px; border:1.5px solid var(--up); border-radius:50%; margin:0 auto 18px; display:flex; align-items:center; justify-content:center; color:var(--up); font-size:22px; }
+  .confirm-box h3{ font-size:20px; margin-bottom:8px; text-transform:none; letter-spacing:0; }
+  .confirm-box p{ font-size:14px; color:var(--text-dim); max-width:420px; margin:0 auto; }
+
+  footer{ padding:44px 0 30px; border-bottom:none; }
+  .foot-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:32px; margin-bottom:36px; }
+  .foot-brand p{ font-size:13px; color:var(--text-faint); margin-top:12px; max-width:260px; }
+  .foot-col h5{ font-size:12px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:14px; font-family:'IBM Plex Mono',monospace; font-weight:500;}
+  .foot-col a{ display:block; font-size:13.5px; color:var(--text-faint); margin-bottom:10px; transition:color .15s;}
+  .foot-col a:hover{ color:var(--text); }
+  .foot-bottom{ border-top:1px solid var(--line); padding-top:20px; display:flex; justify-content:space-between; font-size:12.5px; color:var(--text-faint); font-family:'IBM Plex Mono',monospace; flex-wrap:wrap; gap:10px;}
+
+  @media (max-width: 900px){
+    .info-grid{ grid-template-columns:repeat(2,1fr); }
+    .contact-layout{ grid-template-columns:1fr; }
+    .foot-grid{ grid-template-columns:1fr 1fr; }
+  }
+  @media (max-width: 640px){
+    nav.links{ display:none; }
+    .phero h1{ font-size:30px; }
+    .field-row{ grid-template-columns:1fr; }
+    .info-grid{ grid-template-columns:1fr; }
+    .foot-grid{ grid-template-columns:1fr 1fr; gap:24px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a href="index.html" class="brand">
+      <div class="brand-mark"></div>
+      <div class="brand-name">Pasar<span>Migas</span></div>
+    </a>
+    <nav class="links">
+      <a href="Kategori.html">Kategori</a>
+      <a href="PenawaranAktif.html">Penawaran Aktif</a>
+      <a href="CaraKerja.html">Cara Kerja</a>
+      <a href="HubungiKami.html" class="active">Hubungi Kami</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="JualProduk.html" class="btn btn-outline btn-sm">Jual Produk</a>
+      <a href="AjukanPenawaran.html" class="btn btn-primary btn-sm">Ajukan Penawaran</a>
+    </div>
+  </div>
+</header>
+
+<section class="phero">
+  <div class="wrap">
+    <div class="eyebrow">Kami Siap Membantu</div>
+    <h1>Hubungi Tim PasarMigas</h1>
+    <p class="lede">Punya pertanyaan tentang transaksi, verifikasi, atau kerjasama sebagai supplier? Sampaikan melalui formulir di bawah atau hubungi kami langsung melalui kanal yang tersedia.</p>
+  </div>
+</section>
+
+<section style="border-bottom:none;">
+  <div class="wrap">
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="ii">EMAIL</div>
+        <h3>Layanan Pelanggan</h3>
+        <p>Untuk pertanyaan umum &amp; dukungan transaksi.</p>
+        <a class="link" href="mailto:cs@pasarmigas.id">cs@pasarmigas.id</a>
+      </div>
+      <div class="info-card">
+        <div class="ii">TELEPON</div>
+        <h3>Hotline PasarMigas</h3>
+        <p>Senin – Jumat, 08.00 – 17.00 WIB.</p>
+        <a class="link" href="tel:+622150008899">+62 21 5000 8899</a>
+      </div>
+      <div class="info-card">
+        <div class="ii">KANTOR</div>
+        <h3>Kantor Pusat</h3>
+        <p>Jl. Jenderal Sudirman, Jakarta Selatan, DKI Jakarta, Indonesia.</p>
+      </div>
+      <div class="info-card">
+        <div class="ii">WHATSAPP</div>
+        <h3>Chat Langsung</h3>
+        <p>Respon lebih cepat untuk kebutuhan mendesak.</p>
+        <a class="link" href="#">+62 812 3456 7890</a>
+      </div>
+    </div>
+
+    <div class="contact-layout">
+      <div class="form-panel">
+        <div id="contactFormView">
+          <h3>Kirim Pesan</h3>
+          <p class="sub">Lengkapi formulir berikut, tim kami akan merespon dalam 1×24 jam kerja.</p>
+          <form id="contactForm" onsubmit="submitContactForm(event)">
+            <div class="field-row">
+              <div class="field">
+                <label>Nama Lengkap</label>
+                <input type="text" required placeholder="Nama Anda">
+              </div>
+              <div class="field">
+                <label>Nama Perusahaan (Opsional)</label>
+                <input type="text" placeholder="PT Contoh Industri">
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label>Email</label>
+                <input type="email" required placeholder="nama@perusahaan.co.id">
+              </div>
+              <div class="field">
+                <label>Nomor WhatsApp</label>
+                <input type="tel" required placeholder="08xx xxxx xxxx">
+              </div>
+            </div>
+            <div class="field">
+              <label>Subjek</label>
+              <select>
+                <option>Pertanyaan Umum</option>
+                <option>Kerjasama Sebagai Supplier</option>
+                <option>Dukungan Transaksi</option>
+                <option>Kemitraan &amp; Media</option>
+                <option>Lainnya</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Pesan</label>
+              <textarea required placeholder="Tuliskan pertanyaan atau kebutuhan Anda di sini..."></textarea>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" style="flex:1">Kirim Pesan</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="confirm-box" id="confirmView">
+          <div class="ok-mark">✓</div>
+          <h3>Pesan Terkirim</h3>
+          <p>Terima kasih telah menghubungi PasarMigas. Tim kami akan merespon pesan Anda melalui email atau WhatsApp dalam 1×24 jam kerja.</p>
+        </div>
+      </div>
+
+      <div class="side-panel">
+        <h4>Jam Operasional</h4>
+        <div class="hours-row"><span>Senin – Jumat</span><span>08.00 – 17.00 WIB</span></div>
+        <div class="hours-row"><span>Sabtu</span><span>09.00 – 13.00 WIB</span></div>
+        <div class="hours-row"><span>Minggu &amp; Libur Nasional</span><span>Tutup</span></div>
+        <div class="map-box">Peta Lokasi Kantor</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="kontak-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="brand">
+          <div class="brand-mark"></div>
+          <div class="brand-name">Pasar<span>Migas</span></div>
+        </div>
+        <p>Marketplace B2B untuk perdagangan BBM dan petrokimia industri yang aman, transparan, dan terverifikasi.</p>
+      </div>
+      <div class="foot-col">
+        <h5>Produk</h5>
+        <a href="kategori.html">Solar &amp; Diesel</a>
+        <a href="kategori.html">Bensin &amp; Avtur</a>
+        <a href="kategori.html">Nafta &amp; LPG</a>
+        <a href="kategori.html">Aspal &amp; Base Oil</a>
+      </div>
+      <div class="foot-col">
+        <h5>Perusahaan</h5>
+        <a href="cara-kerja.html">Cara Kerja</a>
+        <a href="#">Kebijakan Verifikasi</a>
+        <a href="#">Karier</a>
+      </div>
+      <div class="foot-col">
+        <h5>Hubungi</h5>
+        <a href="mailto:cs@pasarmigas.id">cs@pasarmigas.id</a>
+        <a href="tel:+622150008899">+62 21 5000 8899</a>
+        <a href="hubungi-kami.html">Jakarta, Indonesia</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div>© 2026 PasarMigas. Semua hak dilindungi.</div>
+      <div>Terdaftar &amp; diawasi sesuai ketentuan niaga migas nasional</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function submitContactForm(e){
+    e.preventDefault();
+    document.getElementById('contactFormView').style.display = 'none';
+    document.getElementById('confirmView').classList.add('show');
+  }
+</script>
+
+</body>
+</html>
